@@ -43,7 +43,7 @@
         <% @book.book_comments.each do |book_comment| %>
         <tr>
           <td>
-            <%= link_to user_path(@user) do %>
+            <%= link_to user_path(book_comment.user) do %>
             <%= image_tag book_comment.user.get_profile_image, size:"100x100" %><br>
             <%= book_comment.user.name %>
             <% end %>
@@ -57,6 +57,9 @@
       </table>
 
       <div>
+        <!-- コメントはbookに結びついているため、配列を2つ用意する
+        また、book_commentをcreateするためのリクエストはルーティングもネスト（親子関係）しているため、
+        2つ必要になる。　インスタンス変数はbooks_controllerのshowアクションに定義-->
         <%= form_with model: [@book, @book_comment] do |f| %>
         <div class="form-group">
           <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに", class: "form-control" %>
