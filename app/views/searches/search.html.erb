@@ -1,24 +1,47 @@
-<h2>Results index</h2>
-
-<table class="table table-hover table-inverse">
-  <!--検索対象モデルがUserの時 -->
-  <% if @range == "User" %>
-    <tbody>
-      <% @users.each do |user| %>
+<% if @range == "User" %>
+<!--検索対象モデルがUserの時 -->
+  <h2>Users search for "<%= params[:word] %>"</h2>
+    <table class="table table-hover table-inverse">
+      <thead>
         <tr>
-          <td><%= user.name %></td>
+          <th>image</th>
+          <th>name</th>
+          <th colspan="3"></th>
         </tr>
-      <% end %>
-    </tbody>
-  <% else %>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
+          <tr>
+            <td><%= image_tag user.get_profile_image, size: '50x50' %></td>
+            <td><%= user.name %></td>
+            <td><%= link_to "Show", user %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+<% else %>
     <!--検索対象モデルがUserではない時(= 検索対象モデルがBookの時) -->
-    <tbody>
-      <% @books.each do |book| %>
+  <h2>Books search for "<%= params[:word] %>"</h2>
+    <table class="table table-hover table-inverse">
+      <thead>
         <tr>
-          <td><%= book.title %></td>
-          <td><%= book.body %></td>
+          <th></th>
+          <th>Title</th>
+          <th>Opinion</th>
+          <th colspan="3"></th>
         </tr>
-      <% end %>
-    </tbody>
-  <% end %>
-</table>
+      </thead>
+      <tbody>
+        <% @books.each do |book| %>
+          <tr>
+            <td><%= link_to(book.user) do %>
+              <%= image_tag book.user.get_profile_image, size:'50x50' %>
+              <% end %>
+            </td>
+            <td><%= link_to book.title,book %></td>
+            <td><%= book.body %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+<% end %>
