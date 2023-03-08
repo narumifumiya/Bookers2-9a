@@ -1,7 +1,7 @@
 <!-- コメントはbookに結びついているため、配列を2つ用意する
 また、book_commentをcreateするためのリクエストはルーティングもネスト（親子関係）しているため、
 2つ必要になる。　インスタンス変数はbooks_controllerのshowアクションに定義-->
-<%= form_with model: [book, book_comment] do |f| %>
+<%= form_with model: [book, book_comment], local: false do |f| %>
 <div class="form-group">
   <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに", class: "form-control" %>
 </div>
