@@ -14,7 +14,7 @@ class BookCommentsController < ApplicationController
   def destroy
     # 削除するコメントを見つける
     # 　　　　　　　　　comment.id↓　　　commentに紐づいたbook_id↓　　　　
-    BookComment.find_by(id: params[:id], book_id: params[:book_id]).destroy
+    @book_comment = BookComment.find_by(id: params[:id], book_id: params[:book_id]).destroy
     # 下記の記述でも問題ない。
     # book_comment = BookComment.find(params[:id])
     # book_comment.destroy
