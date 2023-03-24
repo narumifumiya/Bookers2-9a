@@ -8,13 +8,17 @@ class User < ApplicationRecord
   has_one_attached :profile_image
   has_many :book_comments, dependent: :destroy
   has_many :favorites, dependent: :destroy
-  
+
+  has_many :user_rooms
+  has_many :chats
+  has_many :rooms, through: :user_rooms
+
   # フォローをした、されたの関係
   # 自分がフォローする（与フォロー）側の関係性
   has_many :relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
   # 自分がフォローされる（被フォロー）側の関係性
   has_many :reverse_of_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
-  
+
   # 一覧画面で使う
   # 与フォロー関係を通じて参照→自分がフォローしている人
   has_many :followings, through: :relationships, source: :followed
@@ -29,7 +33,7 @@ class User < ApplicationRecord
   def get_profile_image
     (profile_image.attached?) ? profile_image : 'no_image.jpg'
   end
-  
+
   # フォローしたときの処理
   def follow(user_id)
     relationships.create(followed_id: user_id)
@@ -42,7 +46,7 @@ class User < ApplicationRecord
   def following?(user)
     followings.include?(user)
   end
-  
+
   # 検索方法分岐
   def self.looks(search, word)
     if search == "perfect"
@@ -55,5 +59,5 @@ class User < ApplicationRecord
       User.where("name LIKE?","%#{word}%")
     end
   end
-  
+
 end
