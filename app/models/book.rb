@@ -20,7 +20,7 @@ class Book < ApplicationRecord
       Book.where("title LIKE?","#{word}%")
     elsif search == "backward"
       Book.where("title LIKE?","%#{word}")
-    else search == "partial"
+    else
       Book.where("title LIKE?","%#{word}%")
     end
   end

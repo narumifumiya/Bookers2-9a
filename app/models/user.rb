@@ -57,7 +57,7 @@ class User < ApplicationRecord
       User.where("name LIKE?","#{word}%")
     elsif search == "backward"
       User.where("name LIKE?","%#{word}")
-    else search == "partial"
+    else
       User.where("name LIKE?","%#{word}%")
     end
   end
