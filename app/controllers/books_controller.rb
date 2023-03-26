@@ -7,9 +7,10 @@ class BooksController < ApplicationController
     @newbook = Book.new
     @book_comment = BookComment.new
 
-    @book_detail = Book.find(params[:id])
-    unless ViewCount.find_by(user_id: current_user.id, book_id: @book_detail.id)
-      current_user.view_counts.create(book_id: @book_detail.id)
+    # ViewCountモデルから自分のidと@book.idが入っているデータを探す
+    # 無かったら、自分に紐づけて@bookを閲覧したとview_countデータを作成する
+    unless ViewCount.find_by(user_id: current_user.id, book_id: @book.id)
+      current_user.view_counts.create(book_id: @book.id)
     end
 
   end

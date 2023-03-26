@@ -27,7 +27,8 @@
             <%= render 'book_comments/counter', book: @book %>
           </td>
 
-          <td>閲覧数: <%= @book_detail.view_counts.count %></td>
+          <!-- books_controllerのshowアクションでview_countを@bookに紐づけて作成している為、呼び出す事ができる-->
+          <td>閲覧数: <%= @book.view_counts.count %></td>
 
           <% if @user == current_user %>
             <td><%= link_to 'Edit', edit_book_path(@book), class: "btn btn-sm btn-success" %></td>
